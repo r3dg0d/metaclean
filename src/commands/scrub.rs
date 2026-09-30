@@ -6,16 +6,28 @@ use anyhow::{bail, Result};
 use std::path::Path;
 use walkdir::WalkDir;
 
+/// What to scrub and how, as given on the command line.
+pub struct ScrubRequest<'a> {
+    pub target: &'a Path,
+    pub recursive: bool,
+    pub in_place: bool,
+    pub output: Option<&'a Path>,
+    pub dry_run: bool,
+}
+
 pub fn run(
     out: &OutputOpts,
     cfg: &AppConfig,
     paths: &XdgPaths,
-    target: &Path,
-    recursive: bool,
-    in_place: bool,
-    output: Option<&Path>,
-    dry_run: bool,
+    req: &ScrubRequest<'_>,
 ) -> Result<()> {
+    let ScrubRequest {
+        target,
+        recursive,
+        in_place,
+        output,
+        dry_run,
+    } = *req;
     if recursive {
         if !target.is_dir() {
             bail!("--recursive requires a directory");

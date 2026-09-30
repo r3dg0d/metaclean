@@ -19,9 +19,7 @@ pub fn inspect_jpeg_exif(path: &Path) -> Result<Inspection> {
     let exif = match exif::Reader::new().read_from_container(&mut reader) {
         Ok(e) => e,
         Err(e) => {
-            inspection
-                .notes
-                .push(format!("no readable EXIF: {e}"));
+            inspection.notes.push(format!("no readable EXIF: {e}"));
             return Ok(inspection);
         }
     };
@@ -38,7 +36,9 @@ pub fn inspect_jpeg_exif(path: &Path) -> Result<Inspection> {
     }
 
     if inspection.fields.is_empty() {
-        inspection.notes.push("EXIF present but empty field set".into());
+        inspection
+            .notes
+            .push("EXIF present but empty field set".into());
     }
     Ok(inspection)
 }
@@ -49,7 +49,10 @@ fn categorize_exif_tag(tag: &str) -> String {
         "gps".into()
     } else if t.contains("date") || t.contains("time") {
         "timestamp".into()
-    } else if t.contains("make") || t.contains("model") || t.contains("lens") || t.contains("camera")
+    } else if t.contains("make")
+        || t.contains("model")
+        || t.contains("lens")
+        || t.contains("camera")
     {
         "camera".into()
     } else if t.contains("artist") || t.contains("author") || t.contains("copyright") {
@@ -118,7 +121,9 @@ pub fn inspect_mp3_id3(path: &Path) -> Result<Inspection> {
                 ));
             }
             if inspection.fields.is_empty() {
-                inspection.notes.push("ID3 tag present but no common fields".into());
+                inspection
+                    .notes
+                    .push("ID3 tag present but no common fields".into());
             }
         }
         Err(e) => inspection.notes.push(format!("no ID3 tag: {e}")),

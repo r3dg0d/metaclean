@@ -3,8 +3,8 @@ use anyhow::{Context, Result};
 use std::fs::File;
 use std::io::{Read, Write};
 use std::path::Path;
-use zip::{ZipArchive, ZipWriter};
 use zip::write::SimpleFileOptions;
+use zip::{ZipArchive, ZipWriter};
 
 const CORE_PROPS: &str = "docProps/core.xml";
 const APP_PROPS: &str = "docProps/app.xml";

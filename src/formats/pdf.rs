@@ -42,7 +42,9 @@ pub fn inspect_pdf(path: &Path) -> Result<Inspection> {
         }
     }
     if inspection.fields.is_empty() {
-        inspection.notes.push("no Info dictionary metadata found".into());
+        inspection
+            .notes
+            .push("no Info dictionary metadata found".into());
     }
     Ok(inspection)
 }

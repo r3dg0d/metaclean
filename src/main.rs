@@ -42,9 +42,7 @@ struct Cli {
 #[derive(Subcommand, Debug)]
 enum Commands {
     /// Inspect metadata in a file
-    Inspect {
-        file: PathBuf,
-    },
+    Inspect { file: PathBuf },
     /// Scrub metadata (writes copy by default)
     Scrub {
         file: PathBuf,
@@ -59,9 +57,7 @@ enum Commands {
         output: Option<PathBuf>,
     },
     /// Verify remaining sensitive metadata after scrubbing
-    Verify {
-        file: PathBuf,
-    },
+    Verify { file: PathBuf },
     /// Generate shell completions
     Completions {
         #[arg(value_enum)]
@@ -119,11 +115,13 @@ fn main() -> Result<()> {
             &out,
             &cfg,
             &paths,
-            &file,
-            recursive,
-            in_place,
-            output.as_deref(),
-            cli.dry_run,
+            &commands::scrub::ScrubRequest {
+                target: &file,
+                recursive,
+                in_place,
+                output: output.as_deref(),
+                dry_run: cli.dry_run,
+            },
         )?,
         Commands::Verify { file } => commands::verify::run(&out, &cfg, &file)?,
         Commands::Completions { .. } => unreachable!(),

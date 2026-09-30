@@ -28,8 +28,7 @@ impl AppConfig {
         if !path.exists() {
             return Ok(Self::default());
         }
-        let raw = fs::read_to_string(path)
-            .with_context(|| format!("read {}", path.display()))?;
+        let raw = fs::read_to_string(path).with_context(|| format!("read {}", path.display()))?;
         if raw.trim_start().starts_with('{') {
             return Ok(serde_json::from_str(&raw)?);
         }

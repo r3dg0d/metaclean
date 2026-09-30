@@ -77,7 +77,10 @@ fn categorize_key(k: &str) -> String {
         "gps".into()
     } else if l.contains("date") || l.contains("time") {
         "timestamp".into()
-    } else if l.contains("make") || l.contains("model") || l.contains("camera") || l.contains("lens")
+    } else if l.contains("make")
+        || l.contains("model")
+        || l.contains("camera")
+        || l.contains("lens")
     {
         "camera".into()
     } else if l.contains("author")

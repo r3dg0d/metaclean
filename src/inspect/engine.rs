@@ -66,12 +66,10 @@ pub fn inspect_file(path: &Path, prefer_exiftool: bool, prefer_mat2: bool) -> Re
                     kind: kind.as_str().into(),
                     tool: "none".into(),
                     fields: vec![],
-                    notes: vec![
-                        format!(
-                            "no pure-Rust inspector for {}; install exiftool for full support",
-                            kind.as_str()
-                        ),
-                    ],
+                    notes: vec![format!(
+                        "no pure-Rust inspector for {}; install exiftool for full support",
+                        kind.as_str()
+                    )],
                 })
             }
         }

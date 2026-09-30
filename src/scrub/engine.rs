@@ -66,13 +66,10 @@ pub fn scrub_one(path: &Path, paths: &XdgPaths, opts: &ScrubOpts<'_>) -> Result<
         let ts = Utc::now().format("%Y%m%dT%H%M%S");
         let bak_name = format!(
             "{}.{ts}.bak",
-            path.file_name()
-                .and_then(|s| s.to_str())
-                .unwrap_or("file")
+            path.file_name().and_then(|s| s.to_str()).unwrap_or("file")
         );
         let bak_path = paths.backup_dir.join(bak_name);
-        fs::copy(path, &bak_path)
-            .with_context(|| format!("backup to {}", bak_path.display()))?;
+        fs::copy(path, &bak_path).with_context(|| format!("backup to {}", bak_path.display()))?;
         backup = Some(bak_path.display().to_string());
         actions.push(format!("backed up original to {}", bak_path.display()));
     }
